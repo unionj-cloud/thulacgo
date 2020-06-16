@@ -68,7 +68,7 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
     	ret := lac.Seg("我爱北京天安门")
     
     	fmt.Println(ret)
-        // 我 爱 北京 天安门
+    	// 我 爱 北京 天安门
     }
 	```
 	
@@ -77,18 +77,18 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 * `NewThulacgo(modelpath string, userpath string, justseg bool, t2s bool, ufilter bool, separator byte) (*Thulacgo)`初始化程序，进行自定义设置
 
 	```
-	modelpath           设置模型文件所在文件夹，默认为models/
-	userpath	      	设置用户词典，用户词典中的词会被打上uw标签。词典中每一个词一行，UTF8编码
-	justseg	   		    默认False, 时候只进行分词，不进行词性标注
-	t2s					默认False, 是否将句子从繁体转化为简体
-	ufilter		   		默认False, 是否使用过滤器去除一些没有意义的词语，例如“可以”。	 	    
-	separator	 	    默认为‘_’, 设置词与词性之间的分隔符
+    modelpath           设置模型文件所在文件夹，默认为models/
+    userpath            设置用户词典，用户词典中的词会被打上uw标签。词典中每一个词一行，UTF8编码
+    justseg             默认False, 时候只进行分词，不进行词性标注
+    t2s                 默认False, 是否将句子从繁体转化为简体
+    ufilter             默认False, 是否使用过滤器去除一些没有意义的词语，例如“可以”。	 	    
+    separator           默认为‘_’, 设置词与词性之间的分隔符
 	```
 	
 * `(self *Thulacgo) Seg(text string) string` 对一句话进行分词
 
 	```
-	text 				待分词的文本
+    text                待分词的文本
 	```
 
 ### 2.获取模型
