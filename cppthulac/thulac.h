@@ -316,19 +316,20 @@ THULAC_result THULAC::cut(const std::string& in) const {
 }
 
 std::string THULAC::toString(const THULAC_result& result) const {
-    std::string output = "";
-    for(auto i : result) {
-        if(i.first == "\n") {
-            output += "\n";
-            continue;
-        };
-        if(seg_only) output += i.first + i.second + " ";
-        else output += i.first + char(separator) + i.second + " ";
-    }
-    if(output[output.size()-1] == '\n') output.erase(output.size() - 2, 2);
-    else output.erase(output.size() - 1, 1);
+    std::ostringstream ous;
+    std::string sep(1, separator);
 
-    return output;
+    for(int i = 0; i < result.size() - 1; i++) {
+        if(i != 0) ous << " ";
+        if(seg_only) {
+            ous << result[i].first;
+        }
+        else {
+            ous << result[i].first << sep << result[i].second;
+        }
+    }
+
+    return ous.str();
 }
 
 THULAC_result cut(const std::string &in, const THULAC &lac) {

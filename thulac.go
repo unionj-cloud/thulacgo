@@ -30,9 +30,9 @@ func NewThulacgo(modelpath string, userpath string, justseg bool, t2s bool, ufil
 		_ufilter = C.int(1)
 	}
 	sep := C.char(separator)
-
+	lac := C.NewThulac(mpath, upath, _justseg, _t2s, _ufilter, sep)
 	return &Thulacgo{
-		C.NewThulac(mpath, upath, _justseg, _t2s, _ufilter, sep),
+		lac,
 	}
 }
 

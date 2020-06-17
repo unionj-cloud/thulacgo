@@ -11,6 +11,23 @@ void Deinit(Thulac l)
 {
     ((THULAC*)l)->deinit();
 }
+
+//std::string toString(const THULAC_result& result, bool seg_only, char separator) {
+//    std::ostringstream ous;
+//
+//    for(int i = 0; i < result.size() - 1; i++) {
+//        if(i != 0) ous << " ";
+//        if(seg_only) {
+//            ous << result[i].first;
+//        }
+//        else {
+//            ous << result[i].first << separator << result[i].second;
+//        }
+//    }
+//
+//    return ous.str();
+//}
+
 const char* Seg(Thulac l, const char *in)
 {
     std::string str(in);
