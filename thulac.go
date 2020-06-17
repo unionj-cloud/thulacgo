@@ -40,5 +40,7 @@ func (self *Thulacgo) Deinit() {
 	C.Deinit(self.lac)
 }
 func (self *Thulacgo) Seg(text string) string {
-	return C.GoString(C.Seg(self.lac, C.CString(text)))
+	input := C.CString(text)
+	defer C.free(unsafe.Pointer(input))
+	return C.GoString(C.Seg(self.lac, input))
 }
