@@ -27,3 +27,15 @@ func ExampleSegOnlyTest() {
 	//Output:
 	//尽管 未能 取得 进球 ， 但 武磊 的 表现 受到 当地 媒体 肯定 —— “ 他 在 场上 一 次 又 一 次 地 跑动 ， 从不 停 下来 。 他 现在 与 队友 磨合 得 越来越 好 ， 不再 拘谨 了 ” 。
 }
+
+func ExampleUserpathTest() {
+
+	lac := NewThulacgo("models", "userdict.txt", false, false, false, byte('_'))
+	defer lac.Deinit()
+	ret := lac.Seg("国家卫健委：16日31个省市和新疆生产建设兵团报告新增新冠肺炎确诊病例44例，境外输入病例11例，本土病例33例。")
+
+	fmt.Println(ret)
+
+	//Output:
+	//国家_n 卫健委_j ：_w 16日_t 31_m 个_q 省市_n 和_c 新疆_ns 生产_v 建设_v 兵团_n 报告_v 新增_v 新冠肺炎_uw 确诊_v 病例_n 44_m 例_q ，_w 境外_s 输入_v 病例_n 11_m 例_q ，_w 本土_n 病例_n 33_m 例_n 。_w
+}
