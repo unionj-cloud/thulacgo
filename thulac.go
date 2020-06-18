@@ -6,7 +6,9 @@ package thulacgo
 #include "thulac.h"
 */
 import "C"
-import "unsafe"
+import (
+	"unsafe"
+)
 
 type Thulacgo struct {
 	lac C.Thulac
@@ -39,8 +41,31 @@ func NewThulacgo(modelpath string, userpath string, justseg bool, t2s bool, ufil
 func (self *Thulacgo) Deinit() {
 	C.Deinit(self.lac)
 }
+
 func (self *Thulacgo) Seg(text string) string {
 	input := C.CString(text)
 	defer C.free(unsafe.Pointer(input))
 	return C.GoString(C.Seg(self.lac, input))
+}
+
+func GoStrings(argc C.int, argv **C.char) []string {
+	length := int(argc)
+	tmpslice := (*[1 << 30]*C.char)(unsafe.Pointer(argv))[:length:length]
+	gostrings := make([]string, length)
+	for i, s := range tmpslice {
+		gostrings[i] = C.GoString(s)
+	}
+	return gostrings
+}
+
+func (self *Thulacgo) SegToSlice(text string) []string {
+	input := C.CString(text)
+	defer C.free(unsafe.Pointer(input))
+
+	var output **C.char
+	var size C.int
+	C.SegToSlice(self.lac, input, &output, &size)
+	defer C.free(unsafe.Pointer(output))
+
+	return GoStrings(size, output)
 }

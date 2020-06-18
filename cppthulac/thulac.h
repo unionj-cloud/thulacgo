@@ -16,6 +16,10 @@
 #include <cstring>
 #include <thread>
 #include <future>
+
+using std::cout;
+using std::endl;
+
 using namespace thulac;
 
 typedef std::vector<std::pair<std::string, std::string> > THULAC_result;
@@ -54,6 +58,7 @@ public:
     THULAC_result cut(const std::string& in) const;
     THULAC_result multiTreadCut(const std::string &in, int thread) const;
     std::string toString(const THULAC_result& result) const;
+    std::vector<std::string> toArray(const THULAC_result& result) const;
     //    THULAC operator=(THULAC lac);
 
     THULAC() {
@@ -295,7 +300,6 @@ int THULAC::cut(const std::string &in, THULAC_result& result) const {
             }
         }
         if(startraw == -1) {
-            result.push_back(std::make_pair<std::string, std::string>("\n", ""));
             break;
         }
         else {
@@ -319,7 +323,8 @@ std::string THULAC::toString(const THULAC_result& result) const {
     std::ostringstream ous;
     std::string sep(1, separator);
 
-    for(int i = 0; i < result.size() - 1; i++) {
+    for(int i = 0; i < result.size(); ++i)
+    {
         if(i != 0) ous << " ";
         if(seg_only) {
             ous << result[i].first;
@@ -330,6 +335,25 @@ std::string THULAC::toString(const THULAC_result& result) const {
     }
 
     return ous.str();
+}
+
+std::vector<std::string> THULAC::toArray(const THULAC_result& result) const {
+
+    std::vector<std::string> strArray;
+    strArray.reserve(result.size());
+
+    std::string sep(1, separator);
+
+    for(int index = 0; index < result.size(); ++index)
+    {
+        if(seg_only) {
+            strArray.push_back(result[index].first);
+        }
+        else {
+            strArray.push_back(result[index].first + sep + result[index].second);
+        }
+    }
+    return strArray;
 }
 
 THULAC_result cut(const std::string &in, const THULAC &lac) {
