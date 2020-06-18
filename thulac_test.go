@@ -53,3 +53,16 @@ func ExampleUserpathTest() {
 	//Output:
 	//国家_n 卫健委_j ：_w 16日_t 31_m 个_q 省市_n 和_c 新疆_ns 生产_v 建设_v 兵团_n 报告_v 新增_v 新冠肺炎_uw 确诊_v 病例_n 44_m 例_q ，_w 境外_s 输入_v 病例_n 11_m 例_q ，_w 本土_n 病例_n 33_m 例_n 。_w
 }
+
+func ExampleSegToSliceTest2() {
+
+	lac := NewThulacgo("models", "", false, false, false, byte('_'))
+	defer lac.Deinit()
+	ret := lac.SegToSlice("滚滚长江东逝水，浪花淘尽英雄。是非成败转头空。")
+
+	result := strings.Join(ret, " ")
+	fmt.Println(strings.TrimSpace(result))
+
+	//Output:
+	//滚滚_a 长江_ns 东逝水_id ，_w 浪花_n 淘_v 尽_v 英雄_n 。_w 是非_n 成败_n 转头空_n 。_w
+}
