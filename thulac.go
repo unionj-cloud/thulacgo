@@ -7,11 +7,13 @@ package thulacgo
 */
 import "C"
 import (
+	"sync"
 	"unsafe"
 )
 
 type Thulacgo struct {
-	lac C.Thulac
+	lac  C.Thulac
+	lock sync.Mutex
 }
 
 func NewThulacgo(modelpath string, userpath string, justseg bool, t2s bool, ufilter bool, separator byte) (*Thulacgo) {
@@ -33,8 +35,10 @@ func NewThulacgo(modelpath string, userpath string, justseg bool, t2s bool, ufil
 	}
 	sep := C.char(separator)
 	lac := C.NewThulac(mpath, upath, _justseg, _t2s, _ufilter, sep)
+	var lock sync.Mutex
 	return &Thulacgo{
 		lac,
+		lock,
 	}
 }
 
@@ -43,22 +47,16 @@ func (self *Thulacgo) Deinit() {
 }
 
 func (self *Thulacgo) Seg(text string) string {
+	self.lock.Lock()
+	defer self.lock.Unlock()
 	input := C.CString(text)
 	defer C.free(unsafe.Pointer(input))
 	return C.GoString(C.Seg(self.lac, input))
 }
 
-func GoStrings(argc C.int, argv **C.char) []string {
-	length := int(argc)
-	tmpslice := (*[1 << 30]*C.char)(unsafe.Pointer(argv))[:length:length]
-	gostrings := make([]string, length)
-	for i, s := range tmpslice {
-		gostrings[i] = C.GoString(s)
-	}
-	return gostrings
-}
-
 func (self *Thulacgo) SegToSlice(text string) []string {
+	self.lock.Lock()
+	defer self.lock.Unlock()
 	input := C.CString(text)
 	defer C.free(unsafe.Pointer(input))
 
@@ -67,5 +65,11 @@ func (self *Thulacgo) SegToSlice(text string) []string {
 	C.SegToSlice(self.lac, input, &output, &size)
 	defer C.free(unsafe.Pointer(output))
 
-	return GoStrings(size, output)
+	length := int(size)
+	tmpslice := (*[1 << 30]*C.char)(unsafe.Pointer(output))[:length:length]
+	gostrings := make([]string, length)
+	for i, s := range tmpslice {
+		gostrings[i] = C.GoString(s)
+	}
+	return gostrings
 }

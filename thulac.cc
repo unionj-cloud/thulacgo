@@ -20,7 +20,9 @@ const char* Seg(Thulac l, const char *in)
     std::string str(in);
     THULAC * lac = (THULAC*)l;
     std::string tostr = lac->toString(lac->cut(str));
-    return tostr.c_str();
+    char * cstr = new char [tostr.length()+1];
+    std::strcpy (cstr, tostr.c_str());
+    return cstr;
 }
 
 char *convert(const std::string & s)

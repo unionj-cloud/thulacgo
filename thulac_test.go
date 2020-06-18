@@ -1,8 +1,15 @@
 package thulacgo
 
 import (
+	"bufio"
+	"context"
 	"fmt"
+	"github.com/ztrue/tracerr"
+	"golang.org/x/sync/errgroup"
+	"io"
+	"os"
 	"strings"
+	"unicode/utf8"
 )
 
 func ExampleSegTest() {
@@ -65,4 +72,128 @@ func ExampleSegToSliceTest2() {
 
 	//Output:
 	//滚滚_a 长江_ns 东逝水_id ，_w 浪花_n 淘_v 尽_v 英雄_n 。_w 是非_n 成败_n 转头空_n 。_w
+}
+
+func ProcessLine(r io.Reader, max int, callback func(s string) error) error {
+	reader := bufio.NewReader(r)
+	var err error
+
+	hits := make(chan string)
+	g, ctx := errgroup.WithContext(context.Background())
+
+	g.Go(func() error {
+		defer close(hits)
+
+		for {
+			var line []byte
+			line, _, err = reader.ReadLine()
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				err = tracerr.Wrap(err)
+				return err
+			}
+			sline := string(line)
+
+			lineLength := utf8.RuneCount([]byte(sline))
+
+			if max < 0 || lineLength <= max {
+				select {
+				case hits <- sline:
+				case <-ctx.Done():
+					return ctx.Err()
+				}
+			} else {
+				splits := strings.Split(sline, " ")
+				var index int
+				for {
+					if index >= len(splits) {
+						break
+					}
+
+					var newline string
+
+					for {
+						if utf8.RuneCount([]byte(newline)) >= max || index >= len(splits) {
+							break
+						}
+						newline += splits[index] + " "
+						index++
+					}
+					select {
+					case hits <- newline:
+					case <-ctx.Done():
+						return ctx.Err()
+					}
+				}
+			}
+		}
+
+		return nil
+	})
+
+	for i := 0; i < 10; i++ {
+		g.Go(func() error {
+			for hit := range hits {
+				select {
+				case <-ctx.Done():
+					return ctx.Err()
+				default:
+					if err = callback(hit); err != nil {
+						err = tracerr.Wrap(err)
+						return err
+					}
+				}
+			}
+			return nil
+		})
+	}
+
+	if err := g.Wait(); err != nil {
+		err = tracerr.Wrap(err)
+		return err
+	}
+	return nil
+}
+
+func ExampleThreadSafeSegToSliceTest() {
+	lac := NewThulacgo("models", "", false, false, false, byte('_'))
+	defer lac.Deinit()
+	f, err := os.Open("nlputil_test.txt")
+	if err != nil {
+		panic(err)
+	}
+	ProcessLine(f, 50000, func(line string) error {
+		line = strings.TrimSpace(line)
+		if line == "" {
+			return nil
+		}
+		ret := lac.SegToSlice(line)
+		fmt.Println(ret)
+		return nil
+	})
+
+	//Output:
+	//
+}
+
+func ExampleThreadSafeSegTest() {
+	lac := NewThulacgo("models", "", false, false, false, byte('_'))
+	defer lac.Deinit()
+	f, err := os.Open("nlputil_test.txt")
+	if err != nil {
+		panic(err)
+	}
+	ProcessLine(f, 50000, func(line string) error {
+		line = strings.TrimSpace(line)
+		if line == "" {
+			return nil
+		}
+		ret := lac.Seg(line)
+		fmt.Println(ret)
+		return nil
+	})
+
+	//Output:
 }
