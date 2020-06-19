@@ -6,10 +6,14 @@ package thulacgo
 #include "thulac.h"
 */
 import "C"
-import "unsafe"
+import (
+	"sync"
+	"unsafe"
+)
 
 type Thulacgo struct {
-	lac C.Thulac
+	lac  C.Thulac
+	lock sync.Mutex
 }
 
 func NewThulacgo(modelpath string, userpath string, justseg bool, t2s bool, ufilter bool, separator byte) (*Thulacgo) {
@@ -31,16 +35,41 @@ func NewThulacgo(modelpath string, userpath string, justseg bool, t2s bool, ufil
 	}
 	sep := C.char(separator)
 	lac := C.NewThulac(mpath, upath, _justseg, _t2s, _ufilter, sep)
+	var lock sync.Mutex
 	return &Thulacgo{
 		lac,
+		lock,
 	}
 }
 
 func (self *Thulacgo) Deinit() {
 	C.Deinit(self.lac)
 }
+
 func (self *Thulacgo) Seg(text string) string {
+	self.lock.Lock()
+	defer self.lock.Unlock()
 	input := C.CString(text)
 	defer C.free(unsafe.Pointer(input))
 	return C.GoString(C.Seg(self.lac, input))
+}
+
+func (self *Thulacgo) SegToSlice(text string) []string {
+	self.lock.Lock()
+	defer self.lock.Unlock()
+	input := C.CString(text)
+	defer C.free(unsafe.Pointer(input))
+
+	var output **C.char
+	var size C.int
+	C.SegToSlice(self.lac, input, &output, &size)
+	defer C.free(unsafe.Pointer(output))
+
+	length := int(size)
+	tmpslice := (*[1 << 30]*C.char)(unsafe.Pointer(output))[:length:length]
+	gostrings := make([]string, length)
+	for i, s := range tmpslice {
+		gostrings[i] = C.GoString(s)
+	}
+	return gostrings
 }
