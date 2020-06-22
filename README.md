@@ -1,6 +1,3 @@
-[![Build Status](https://www.travis-ci.org/TQCCC/thulacgo.svg?branch=master)](https://www.travis-ci.org/TQCCC/thulacgo)
-
-
 # THULAC：一个高效的中文词法分析工具包
 ## 目录
 * [项目介绍](#项目介绍)
