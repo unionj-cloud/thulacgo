@@ -246,7 +246,7 @@ public:
             }
             if(flag){
                 use(base);
-                for(int i=0;i<size;i++)use(base+offsets[i]);
+                for(unsigned int i=0;i<size;i++)use(base+offsets[i]);
                 return base;//got it and return it
             }
             if(dat[base].check==-dat_size)extends();
@@ -259,7 +259,7 @@ public:
         for(size_t ind=start;ind<lexicon.size();ind++){
             Word& word=lexicon[ind].key;
             if(word.size()<l)return;
-            for(int i=0;i<l;i++)if(word[i]!=prefix[i])return;
+            for(unsigned int i=0;i<l;i++)if(word[i]!=prefix[i])return;
             if(word.size()>l){
                 if(children.empty()||word[l]!=children.back())
                     children.push_back(word[l]);
@@ -288,7 +288,7 @@ public:
     void make_dat(std::vector<KeyValue>& lexicon,int no_prefix=0){
         std::sort(lexicon.begin(),lexicon.end(),&compare_words);
 
-        int size=(int)lexicon.size();
+        // int size=(int)lexicon.size();
         std::vector<int> children;
         Word prefix;
         prefix.clear();
@@ -307,7 +307,7 @@ public:
                 int p_base=-get_info(prefix);
                 
                 gen_children(lexicon,i,prefix,children);
-                int base=assign(p_base,children,offset==(int)word.size());
+                assign(p_base,children,offset==(int)word.size());
             }
             off=-get_info(word);
             if(no_prefix){

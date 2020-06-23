@@ -366,9 +366,9 @@ void TaggingDecoder::load_label_trans(char*filename){
     int ind=0;
     for(int i=0;i<label_size;i++){
         label_trans_pre[i]=label_trans+ind;
-        while(label_trans[ind]!=-1)ind++;ind++;
+        while(label_trans[ind]!=-1){ind++;ind++;}
         label_trans_post[i]=label_trans+ind;
-        while(label_trans[ind]!=-1)ind++;ind++;
+        while(label_trans[ind]!=-1){ind++;ind++;}
     }
     fclose (pFile);
     return;
