@@ -1,3 +1,12 @@
+# IDE
 .idea
-models
 .vscode
+
+# models
+models
+
+# other
+*.o
+*.gcno
+*.gcov
+
