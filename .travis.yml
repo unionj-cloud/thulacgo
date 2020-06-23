@@ -4,6 +4,13 @@ go:
 
 sudo: required
 
+addons:
+  sonarcloud:
+    organization: "Tsingxiao"
+    token:
+      secure: "run: travis encrypt <your travis token>"
+
+
 env:
   - GO111MODULE=on
 
@@ -15,6 +22,12 @@ install:
   - bash scripts/models.sh
 
 script:
-  - go test -v ./... -count=1
-
-# TODO sonarcloud c++
+  - make clean
+  # Wraps the compilation with the Build Wrapper to generate configuration (used
+  # later by the SonarQube Scanner) into the "bw-output" folder
+  - build-wrapper-linux-x86-64 --out-dir bw-output make all
+  # Execute some tests
+  - make test
+  # And finally run the SonarQube analysis - read the "sonar-project.properties"
+  # file to see the specific configuration
+  - sonar-scanner
