@@ -115,7 +115,7 @@ public:
 	void adjust(SegmentedSentence& sentence){
 		int size = sentence.size();
 		Word word;
-		int count = 0;
+		// int count = 0;
 		bool hasTimeWord = false;
 		std::set<int>::iterator it;
 

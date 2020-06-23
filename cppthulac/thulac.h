@@ -104,7 +104,7 @@ private:
     bool useT2S;
     bool seg_only ;
     bool useFilter;
-    int max_length;
+    unsigned int max_length;
     TaggingDecoder* cws_decoder;
     permm::Model* cws_model;
     DAT* cws_dat;
@@ -243,7 +243,7 @@ int THULAC::cut(const std::string &in, THULAC_result& result) const {
             vec.clear();
             vec.push_back(oiraw);
         }
-        for(int vec_num = 0; vec_num < vec.size(); vec_num++) {
+        for(unsigned int vec_num = 0; vec_num < vec.size(); vec_num++) {
             if(useT2S) {
                 preprocesser->clean(vec[vec_num],traw,poc_cands);
                 preprocesser->T2S(traw, raw);
@@ -269,7 +269,7 @@ int THULAC::cut(const std::string &in, THULAC_result& result) const {
                     if(useFilter){
                         filter->adjust(segged);
                     }
-                    for(int j = 0; j < segged.size(); j++){
+                    for(unsigned int j = 0; j < segged.size(); j++){
                         ous.str("");
                         ous << segged[j];
                         result.push_back(std::make_pair<std::string, std::string>(ous.str(), ""));
@@ -288,7 +288,7 @@ int THULAC::cut(const std::string &in, THULAC_result& result) const {
                     if(useFilter){
                         filter->adjust(tagged);
                     }
-                    for(int j = 0; j < tagged.size(); j++) {
+                    for(unsigned int j = 0; j < tagged.size(); j++) {
                         ous.str("");
                         ous << tagged[j].word;
                         std::string s = tagged[j].tag;
@@ -323,7 +323,7 @@ std::string THULAC::toString(const THULAC_result& result) const {
     std::ostringstream ous;
     std::string sep(1, separator);
 
-    for(int i = 0; i < result.size(); ++i)
+    for(unsigned int i = 0; i < result.size(); ++i)
     {
         if(i != 0) ous << " ";
         if(seg_only) {
@@ -344,7 +344,7 @@ std::vector<std::string> THULAC::toArray(const THULAC_result& result) const {
 
     std::string sep(1, separator);
 
-    for(int index = 0; index < result.size(); ++index)
+    for(unsigned int index = 0; index < result.size(); ++index)
     {
         if(seg_only) {
             strArray.push_back(result[index].first);

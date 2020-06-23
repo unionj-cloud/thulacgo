@@ -30,14 +30,14 @@ public:
     void adjust(SegmentedSentence& sentence){
         if(!p_dat)return;
         std::vector<Word> tmpVec;
-        for(int i = 0 ; i < sentence.size(); i ++){
+        for(unsigned int i = 0 ; i < sentence.size(); i ++){
             Word tmp = sentence[i];
             if(p_dat->get_info(tmp) >= 0) continue;
 
             //std::cout<<tmp<<std::endl;
 
             tmpVec.clear();
-            int j;
+            unsigned int j;
             for(j = i + 1; j < sentence.size(); j ++){
                 tmp += sentence[j];
                 if(p_dat->get_info(tmp) >= 0){
@@ -70,14 +70,14 @@ public:
         if(!p_dat)return;
         std::vector<Word> tmpVec;
 	bool findMulti = false;
-        for(int i = 0 ; i < sentence.size(); i ++){
+        for(unsigned int i = 0 ; i < sentence.size(); i ++){
             Word tmp = sentence[i].word;
             if(p_dat->get_info(tmp) >= 0) continue;
 
             //std::cout<<tmp<<std::endl;
 
             tmpVec.clear();
-            int j;
+            unsigned int j;
             for(j = i + 1; j < sentence.size(); j ++){
                 tmp += sentence[j].word;
                 if(p_dat->get_info(tmp) >= 0){
@@ -97,7 +97,7 @@ public:
                     for(j = i + 1; j < i + k + 2; j ++){
                         sentence[i].word += sentence[j].word;
                     }
-                    for(j = i + k + 1; j > i; j--){
+                    for(unsigned j = i + k + 1; j > i; j--){
                         sentence.erase(sentence.begin() + j);
                     }
                     sentence[i].tag = "w";
