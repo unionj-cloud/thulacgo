@@ -11,4 +11,4 @@ aux_source_directory(. DIR_SRCS)
 include_directories(cppthulac)
 
 # exe
-add_executable(Thulacgo test/main.cpp ${DIR_SRCS})
+add_executable(Thulacgo cpptest/main.cpp ${DIR_SRCS})
