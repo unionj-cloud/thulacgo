@@ -10,3 +10,6 @@ models
 *.gcno
 *.gcov
 
+# cmake
+cmake-build-debug
+
