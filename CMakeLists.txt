@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 # project info
-project(Thulacgo)
+project(ThulacgoTest)
 
 # source dir
 aux_source_directory(. DIR_SRCS)
@@ -11,4 +11,5 @@ aux_source_directory(. DIR_SRCS)
 include_directories(cppthulac)
 
 # exe
-add_executable(Thulacgo cpptest/main.cpp ${DIR_SRCS})
+add_executable(ThulacgoTest cpptest/main.cpp ${DIR_SRCS})
+
