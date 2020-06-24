@@ -60,7 +60,7 @@ public:
         int right=0;int right2=0;
         RawSentence key;
         RawSentence bigram;
-        for(unsigned int i=0;i<seq.size();i++){
+        for(int i=0;i<seq.size();i++){
             mid=seq[i];
             left=(i>0)?(seq[i-1]):(SENTENCE_BOUNDARY);
             left2=((i-2)>=0)?(seq[i-2]):(SENTENCE_BOUNDARY);
@@ -174,7 +174,7 @@ public:
 
     }
 private:
-    inline void update_weight(int *value_offset,unsigned int base,int del,int label,int delta,long steps){
+    inline void update_weight(int *value_offset,int base,int del,int label,int delta,long steps){
         int ind=dat[base].base+del;
         if(ind>=dat_size||dat[ind].check!=base)return;
         register int offset=dat[dat[base].base+del].base;
@@ -182,7 +182,7 @@ private:
         //model->fl_weights[offset*model->l_size+label]+=delta;
     }
     /*只内部调用*/
-    inline void add_values(int *value_offset,unsigned int base,int del,int* p_allowed_label=NULL){
+    inline void add_values(int *value_offset,int base,int del,int* p_allowed_label=NULL){
         int ind=dat[base].base+del;
         if(ind>=dat_size||dat[ind].check!=base){
             return;
@@ -207,7 +207,7 @@ private:
             }
         }
     };
-    inline void check_values(int *value_offset,unsigned int base,int del,int* p_allowed_label=NULL){
+    inline void check_values(int *value_offset,int base,int del,int* p_allowed_label=NULL){
         int ind=dat[base].base+del;
         if(ind>=dat_size||dat[ind].check!=base){
             return;
@@ -242,7 +242,7 @@ private:
     /*
      * 找出以ch1 ch2为字符的dat的下标
      * */
-    inline void find_bases(int dat_size,unsigned int ch1,int ch2,int& uni_base,int&bi_base){
+    inline void find_bases(int dat_size,int ch1,int ch2,int& uni_base,int&bi_base){
         if(ch1>32 &&ch1<128)ch1+=65248;
         if(ch2>32 &&ch2<128)ch2+=65248;
         if(dat[ch1].check){

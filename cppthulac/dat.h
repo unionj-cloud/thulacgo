@@ -12,7 +12,7 @@ class DAT{
 public:
     struct Entry{
         int base;
-        unsigned int check;
+        int check;
     };
 
     Entry* dat;
@@ -52,8 +52,8 @@ public:
         free(dat);
     }
 
-    inline int get_index(unsigned int base,const Character& character){
-        unsigned int ind=dat[base].base+character;
+    inline int get_index(int base,const Character& character){
+        int ind=dat[base].base+character;
         if((ind>=dat_size)||dat[ind].check!=base)return -1;
         return ind;
     };
@@ -64,8 +64,8 @@ public:
         int empty=1;
         for(int offset=0;offset<(int)sentence.size();offset++){
             int pre_base=0;
-            unsigned int pre_ind=0;
-            unsigned int ind=0;
+            int pre_ind=0;
+            int ind=0;
             for(int i=offset;i<(int)sentence.size();i++){
                 ind=pre_base+sentence[i];
                 if(ind<0||ind>=dat_size||dat[ind].check!=pre_ind)break;
@@ -89,8 +89,8 @@ public:
         int empty=1;
         for(int offset=0;offset<(int)sentence.size();offset++){
             int pre_base=0;
-            unsigned int pre_ind=0;
-            unsigned int ind=0;
+            int pre_ind=0;
+            int ind=0;
             for(int i=offset;i<(int)sentence.size();i++){
                 ind=pre_base+sentence[i];
                 if(ind<0||ind>=dat_size||dat[ind].check!=pre_ind)break;
@@ -115,8 +115,8 @@ public:
      * 如果匹配成果，返回下标（base[下标]为value）
      * */
     int match(const Word& word,int post=0){
-        unsigned register int ind=0;
-        unsigned register int base=0;
+        register int ind=0;
+        register int base=0;
         for(int i=0;i<(int)word.size();i++){
             ind=dat[ind].base+word[i];
             if((ind>=dat_size)||dat[ind].check!=base)return -1;
@@ -137,8 +137,8 @@ public:
 
     /*return -base or number of matched characters*/
     int get_info(std::vector<int> prefix){
-        unsigned register int ind=0;
-        unsigned register int base=0;
+        register int ind=0;
+        register int base=0;
         for(size_t i=0;i<prefix.size();i++){
             ind=dat[ind].base+prefix[i];
             if((ind>=dat_size)||dat[ind].check!=base)return i;
@@ -160,7 +160,7 @@ public:
         const thulac::Word& first_word=first.key;
         const thulac::Word& second_word=second.key;
         size_t min_size=(first_word.size()<second_word.size())?first_word.size():second_word.size();
-        for(unsigned int i=0;i<min_size;i++){
+        for(int i=0;i<min_size;i++){
             if(first_word[i]>second_word[i])return false;
             if(first_word[i]<second_word[i])return true;
         }
@@ -237,7 +237,7 @@ public:
             if(dat[base].check>=0){
                 flag=false;
             }else{
-                for(unsigned register int i=0;i<size;i++){
+                for(register int i=0;i<size;i++){
                     if(dat[base+offsets[i]].check>=0){//used
                         flag=false;
                         break;
@@ -246,7 +246,7 @@ public:
             }
             if(flag){
                 use(base);
-                for(unsigned int i=0;i<size;i++)use(base+offsets[i]);
+                for(int i=0;i<size;i++)use(base+offsets[i]);
                 return base;//got it and return it
             }
             if(dat[base].check==-dat_size)extends();
@@ -259,7 +259,7 @@ public:
         for(size_t ind=start;ind<lexicon.size();ind++){
             Word& word=lexicon[ind].key;
             if(word.size()<l)return;
-            for(unsigned int i=0;i<l;i++)if(word[i]!=prefix[i])return;
+            for(int i=0;i<l;i++)if(word[i]!=prefix[i])return;
             if(word.size()>l){
                 if(children.empty()||word[l]!=children.back())
                     children.push_back(word[l]);
