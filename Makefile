@@ -1,5 +1,5 @@
 all:
-	g++ -std=c++11 -I./cppthulac -DLOGGING_LEVEL=LL_WARNING -O3 -Wall -fprofile-arcs -ftest-coverage -c thulac.cc
+	g++ -std=c++11 -I./cppthulac -DLOGGING_LEVEL=LL_WARNING -O3 -Wall -fprofile-arcs -ftest-coverage thulac.cc -shared -fPIC -o thulac.so
 
 test:
 	go test -count=1 -v ./...
@@ -7,6 +7,7 @@ test:
 
 clean:
 	rm -f *.o
+	rm -f *.so
 	rm -f *.gcda
 	rm -f *.gcno
 	rm -f *.gcov
