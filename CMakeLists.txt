@@ -13,3 +13,6 @@ include_directories(cppthulac)
 # exe
 add_executable(ThulacgoTest cpptest/main.cpp ${DIR_SRCS})
 
+# def
+add_definitions(-std=c++11 -DLOGGING_LEVEL=LL_WARNING -O3 -Wall)
+
