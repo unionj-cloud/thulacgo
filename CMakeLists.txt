@@ -1,8 +1,8 @@
 # CMake version
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required(VERSION 2.8)
 
 # project info
-project (Thulacgo)
+project(Thulacgo)
 
 # source dir
 aux_source_directory(. DIR_SRCS)
@@ -11,4 +11,4 @@ aux_source_directory(. DIR_SRCS)
 include_directories(cppthulac)
 
 # exe
-add_executable(Thulacgo ${DIR_SRCS})
+add_executable(Thulacgo test/main.cpp ${DIR_SRCS})
