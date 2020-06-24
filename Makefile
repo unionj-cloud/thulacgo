@@ -2,7 +2,7 @@ all:
 	g++ -std=c++11 -I./cppthulac -DLOGGING_LEVEL=LL_WARNING -O3 -Wall -fprofile-arcs -ftest-coverage -c thulac.cc
 
 test:
-	go test -v ./... -count=1
+	go test -count=1 -v ./...
 	gcov --branch-probabilities --branch-counts thulac.cc -o .
 
 clean:

@@ -4,12 +4,13 @@ import (
 	"bufio"
 	"context"
 	"fmt"
-	"github.com/ztrue/tracerr"
-	"golang.org/x/sync/errgroup"
 	"io"
 	"os"
 	"strings"
 	"unicode/utf8"
+
+	"github.com/ztrue/tracerr"
+	"golang.org/x/sync/errgroup"
 )
 
 func ExampleSegTest() {
@@ -174,8 +175,14 @@ func ExampleThreadSafeSegToSliceTest() {
 		return nil
 	})
 
-	//Output:
-	//
+	//Unordered output:
+	//[——_w 调寄_v 《_w 临江仙_nz 》_w]
+	//[------------_w]
+	//[话_n 说_v 天下_n 大势_n ，_w 分久必合_id ，_w 合久必分_id 。_w 周末_t 七国分争_id ，_w 并入_v 于_p 秦_g 。_w 及_c 秦灭_v 之后_f ，_w 楚_j 、_w 汉_g 分争_v ，_w 又_c 并入_v 于_p 汉_g 。_w 汉朝_t 自_r 高_a 祖斩_n 白蛇_n 而_c 起义_v ，_w 一统天下_id ，_w 后来_t 光武_ns 中兴_nz ，_w 传_v 至_d 献_v 帝_g ，_w 遂_d 分为_v 三_m 国_n 。_w 推_v 其_r 致乱_v 之_u 由_g ，_w 殆始_v 于_p 桓_g 、_w 灵二帝_id 。_w 桓帝_np 禁锢_v 善类_n ，_w 崇信_v 宦官_n 。_w 及_c 桓帝崩_n ，_w 灵帝_n 即位_n ，_w 大将军_n 窦武_v 、_w 太傅_n 陈蕃_np 共_d 相_d 辅佐_v 。_w 时_g 有_v 宦官_n 曹节_np 等_u 弄权_n ，_w 窦武_np 、_w 陈蕃_np 谋诛_v 之_u ，_w 机事不密_i ，_w 反_d 为_v 所_u 害_v ，_w 中_j 涓_j 自此_d 愈_d 横_a 。_w]
+	//[第_m 1_m 章_q  _w 宴桃园_n 豪杰_n 三结义_j 斩_v 黄巾_n 英雄_n 首_m 立功_v]
+	//[滚滚_a 长江_ns 东逝水_id ，_w 浪花_n 淘_v 尽_v 英雄_n 。_w 是非_n 成败_n 转头空_n 。_w]
+	//[青山_n 依旧_a 在_v ，_w 几度_m 夕阳_n 红_a 。_w 白发_n 渔樵_n 江渚_n 上_f ，_w 惯_v 看_v 秋月春风_i 。_w 一_m 壶浊_a 酒喜相逢_id 。_w 古今_n 多少_r 事_n ，_w 都_d 付笑_v 谈_v 中_f 。_w]
+
 }
 
 func ExampleThreadSafeSegTest() {
@@ -195,5 +202,11 @@ func ExampleThreadSafeSegTest() {
 		return nil
 	})
 
-	//Output:
+	//Unordered output:
+	//——_w 调寄_v 《_w 临江仙_nz 》_w
+	//------------_w
+	//话_n 说_v 天下_n 大势_n ，_w 分久必合_id ，_w 合久必分_id 。_w 周末_t 七国分争_id ，_w 并入_v 于_p 秦_g 。_w 及_c 秦灭_v 之后_f ，_w 楚_j 、_w 汉_g 分争_v ，_w 又_c 并入_v 于_p 汉_g 。_w 汉朝_t 自_r 高_a 祖斩_n 白蛇_n 而_c 起义_v ，_w 一统天下_id ，_w 后来_t 光武_ns 中兴_nz ，_w 传_v 至_d 献_v 帝_g ，_w 遂_d 分为_v 三_m 国_n 。_w 推_v 其_r 致乱_v 之_u 由_g ，_w 殆始_v 于_p 桓_g 、_w 灵二帝_id 。_w 桓帝_np 禁锢_v 善类_n ，_w 崇信_v 宦官_n 。_w 及_c 桓帝崩_n ，_w 灵帝_n 即位_n ，_w 大将军_n 窦武_v 、_w 太傅_n 陈蕃_np 共_d 相_d 辅佐_v 。_w 时_g 有_v 宦官_n 曹节_np 等_u 弄权_n ，_w 窦武_np 、_w 陈蕃_np 谋诛_v 之_u ，_w 机事不密_i ，_w 反_d 为_v 所_u 害_v ，_w 中_j 涓_j 自此_d 愈_d 横_a 。_w
+	//第_m 1_m 章_q  _w 宴桃园_n 豪杰_n 三结义_j 斩_v 黄巾_n 英雄_n 首_m 立功_v
+	//滚滚_a 长江_ns 东逝水_id ，_w 浪花_n 淘_v 尽_v 英雄_n 。_w 是非_n 成败_n 转头空_n 。_w
+	//青山_n 依旧_a 在_v ，_w 几度_m 夕阳_n 红_a 。_w 白发_n 渔樵_n 江渚_n 上_f ，_w 惯_v 看_v 秋月春风_i 。_w 一_m 壶浊_a 酒喜相逢_id 。_w 古今_n 多少_r 事_n ，_w 都_d 付笑_v 谈_v 中_f 。_w
 }
