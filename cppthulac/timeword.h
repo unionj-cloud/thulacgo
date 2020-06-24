@@ -56,7 +56,7 @@ public:
 	inline bool isArabicNum(Word word){
 		bool allArabic = true;
 		std::set<int>::iterator it;
-		for(int i = 0; i < word.size(); i ++){
+		for(unsigned int i = 0; i < word.size(); i ++){
 			it = arabicNumSet.find(word[i]);
 			if(it == arabicNumSet.end()){
 				allArabic = false;

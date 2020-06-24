@@ -53,7 +53,7 @@ public:
 			checkArabic = false;
 			checkChinese = false;
 			
-			for(int j = 0; j < word.size(); j ++){
+			for(unsigned int j = 0; j < word.size(); j ++){
 				it = arabicNumSet.find(word[j]);
 				if(it != arabicNumSet.end()){
 					checkArabic = true;

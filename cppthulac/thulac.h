@@ -104,7 +104,7 @@ private:
     bool useT2S;
     bool seg_only ;
     bool useFilter;
-    int max_length;
+    unsigned int max_length;
     TaggingDecoder* cws_decoder;
     permm::Model* cws_model;
     DAT* cws_dat;
