@@ -12,5 +12,4 @@ models
 *.exe
 
 # cmake
-cmake-build-debug
 build
