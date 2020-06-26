@@ -424,7 +424,7 @@ namespace thulac{
                     sent_tmp.clear();
                     num = i - last_pun + 1;
                 }
-                for(int j = last_pun; j <= i; j++) sent_tmp.push_back(sent[j]);
+                for(unsigned int j = last_pun; j <= i; j++) sent_tmp.push_back(sent[j]);
                 last_pun = i+1;
             }
         }
