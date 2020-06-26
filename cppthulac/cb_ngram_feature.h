@@ -60,7 +60,7 @@ public:
         int right=0;int right2=0;
         RawSentence key;
         RawSentence bigram;
-        for(int i=0;i<seq.size();i++){
+        for(unsigned int i=0;i<seq.size();i++){
             mid=seq[i];
             left=(i>0)?(seq[i-1]):(SENTENCE_BOUNDARY);
             left2=((i-2)>=0)?(seq[i-2]):(SENTENCE_BOUNDARY);

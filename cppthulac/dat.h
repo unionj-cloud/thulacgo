@@ -237,7 +237,7 @@ public:
             if(dat[base].check>=0){
                 flag=false;
             }else{
-                for(register int i=0;i<size;i++){
+                for(register unsigned int i=0;i<size;i++){
                     if(dat[base+offsets[i]].check>=0){//used
                         flag=false;
                         break;
@@ -246,10 +246,10 @@ public:
             }
             if(flag){
                 use(base);
-                for(int i=0;i<size;i++)use(base+offsets[i]);
+                for(unsigned int i=0;i<size;i++)use(base+offsets[i]);
                 return base;//got it and return it
             }
-            if(dat[base].check==-dat_size)extends();
+            if((unsigned int)dat[base].check==-dat_size)extends();
             base=-dat[base].check;
         }
     }
@@ -259,7 +259,7 @@ public:
         for(size_t ind=start;ind<lexicon.size();ind++){
             Word& word=lexicon[ind].key;
             if(word.size()<l)return;
-            for(int i=0;i<l;i++)if(word[i]!=prefix[i])return;
+            for(unsigned int i=0;i<l;i++)if(word[i]!=prefix[i])return;
             if(word.size()>l){
                 if(children.empty()||word[l]!=children.back())
                     children.push_back(word[l]);
