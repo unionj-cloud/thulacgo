@@ -53,7 +53,7 @@ public:
     }
 
     inline int get_index(int base,const Character& character){
-        int ind=dat[base].base+character;
+        unsigned int ind=dat[base].base+character;
         if((ind>=dat_size)||dat[ind].check!=base)return -1;
         return ind;
     };
@@ -65,7 +65,7 @@ public:
         for(int offset=0;offset<(int)sentence.size();offset++){
             int pre_base=0;
             int pre_ind=0;
-            int ind=0;
+            unsigned int ind=0;
             for(int i=offset;i<(int)sentence.size();i++){
                 ind=pre_base+sentence[i];
                 if(ind<0||ind>=dat_size||dat[ind].check!=pre_ind)break;
@@ -90,7 +90,7 @@ public:
         for(int offset=0;offset<(int)sentence.size();offset++){
             int pre_base=0;
             int pre_ind=0;
-            int ind=0;
+            unsigned int ind=0;
             for(int i=offset;i<(int)sentence.size();i++){
                 ind=pre_base+sentence[i];
                 if(ind<0||ind>=dat_size||dat[ind].check!=pre_ind)break;
@@ -115,7 +115,7 @@ public:
      * 如果匹配成果，返回下标（base[下标]为value）
      * */
     int match(const Word& word,int post=0){
-        register int ind=0;
+        register unsigned int ind=0;
         register int base=0;
         for(int i=0;i<(int)word.size();i++){
             ind=dat[ind].base+word[i];
@@ -137,7 +137,7 @@ public:
 
     /*return -base or number of matched characters*/
     int get_info(std::vector<int> prefix){
-        register int ind=0;
+        register unsigned int ind=0;
         register int base=0;
         for(size_t i=0;i<prefix.size();i++){
             ind=dat[ind].base+prefix[i];
@@ -160,7 +160,7 @@ public:
         const thulac::Word& first_word=first.key;
         const thulac::Word& second_word=second.key;
         size_t min_size=(first_word.size()<second_word.size())?first_word.size():second_word.size();
-        for(int i=0;i<min_size;i++){
+        for(unsigned int i=0;i<min_size;i++){
             if(first_word[i]>second_word[i])return false;
             if(first_word[i]<second_word[i])return true;
         }
@@ -191,7 +191,7 @@ public:
         }else{
             dat[-dat[ind].base].check=dat[ind].check;
         };
-        if(dat[ind].check==-dat_size){
+        if(dat[ind].check==-((int)dat_size)){
             tail=dat[ind].base;
         }else{
             dat[-dat[ind].check].base=dat[ind].base;
@@ -249,7 +249,7 @@ public:
                 for(unsigned int i=0;i<size;i++)use(base+offsets[i]);
                 return base;//got it and return it
             }
-            if((unsigned int)dat[base].check==-dat_size)extends();
+            if(dat[base].check==-((int)dat_size))extends();
             base=-dat[base].check;
         }
     }

@@ -59,7 +59,7 @@ namespace thulac{
         sent.clear();
         int current_character=-1;
         int c;
-        for(int i=0;i<str.length();i++){
+        for(unsigned int i=0;i<str.length();i++){
             c=str.at(i);
             if(!(c&0x80)){//1个byte的utf-8编码
                 if(current_character!=-1)sent.push_back(current_character);
@@ -414,7 +414,7 @@ namespace thulac{
         // int current_character=-1;
         int c, num = 0, last_pun = 0;
         sent_tmp.clear();
-        for(int i = 0; i < sent.size(); i++){//反复读取输入流
+        for(unsigned int i = 0; i < sent.size(); i++){//反复读取输入流
             c = sent[i];
             num++;
             it = pun_set.find(c);
