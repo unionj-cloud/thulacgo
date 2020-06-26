@@ -349,10 +349,10 @@ void TaggingDecoder::load_label_trans(char*filename){
     }
     /*得到文件大小*/
     int remain_size=0;
-    int rtn=fread (&remain_size,sizeof(int),1,pFile);
+    fread (&remain_size,sizeof(int),1,pFile);
     /*得到矩阵数据*/
     label_trans=new int[remain_size];
-    rtn=fread (label_trans,sizeof(int),remain_size,pFile);
+    fread (label_trans,sizeof(int),remain_size,pFile);
     
     /*计算标签个数*/
     int label_size=0;
@@ -366,9 +366,9 @@ void TaggingDecoder::load_label_trans(char*filename){
     int ind=0;
     for(int i=0;i<label_size;i++){
         label_trans_pre[i]=label_trans+ind;
-        while(label_trans[ind]!=-1)ind++;ind++;
+        while(label_trans[ind]!=-1){ind++;ind++;}
         label_trans_post[i]=label_trans+ind;
-        while(label_trans[ind]!=-1)ind++;ind++;
+        while(label_trans[ind]!=-1){ind++;ind++;}
     }
     fclose (pFile);
     return;
@@ -390,14 +390,14 @@ void TaggingDecoder::put_values(){
 
 
 void TaggingDecoder::output_raw_sentence(){
-    int c;
+    // int c;
     for(int i=0;i<len;i++){
         thulac::put_character(sequence[i]);
         
     }
 }
 void TaggingDecoder::output_sentence(){
-    int c;
+    // int c;
     for(int i=0;i<len;i++){
         thulac::put_character(sequence[i]);
         
@@ -434,7 +434,7 @@ int TaggingDecoder::segment(RawSentence& raw, POCGraph& graph, TaggedSentence& t
         allowed_label_lists[i]=NULL;
     }
 
-    int c;
+    // int c;
     int offset=0;
     ts.clear();
     for(int i=0;i<len;i++){
