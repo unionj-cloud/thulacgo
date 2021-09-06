@@ -1,2 +1,16 @@
+# IDE
 .idea
+.vscode
+
+# models
 models
+
+# other
+*.o
+*.so
+*.gcno
+*.gcov
+*.exe
+
+# cmake
+build

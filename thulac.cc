@@ -42,7 +42,7 @@ void SegToSlice(Thulac l, const char *in, char ***out, int *size)
 
     char ** vc = new char *[vsize];
 
-    for(int i = 0; i < vs.size(); ++i)
+    for(unsigned int i = 0; i < vs.size(); ++i)
     {
         std::string str = vs[i];
         char * cstr = new char [str.length()+1];

@@ -1,7 +1,7 @@
 package thulacgo
 
 /*
-#cgo CXXFLAGS: -I./cppthulac -DLOGGING_LEVEL=LL_WARNING -O3 -Wall
+#cgo CXXFLAGS: -std=c++11 -I./cppthulac -DLOGGING_LEVEL=LL_WARNING -O3 -Wall
 #include <stdlib.h>
 #include "thulac.h"
 */
