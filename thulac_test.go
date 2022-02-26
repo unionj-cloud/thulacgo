@@ -62,6 +62,18 @@ func ExampleUserpathTest() {
 	//国家_n 卫健委_j ：_w 16日_t 31_m 个_q 省市_n 和_c 新疆_ns 生产_v 建设_v 兵团_n 报告_v 新增_v 新冠肺炎_uw 确诊_v 病例_n 44_m 例_q ，_w 境外_s 输入_v 病例_n 11_m 例_q ，_w 本土_n 病例_n 33_m 例_n 。_w
 }
 
+func ExampleUserpath1Test() {
+
+	lac := NewThulacgo("models", "userdict.txt", false, false, false, byte('_'))
+	defer lac.Deinit()
+	ret := lac.Seg("最近，勇士老将伊戈达拉道出了实情！")
+
+	fmt.Println(ret)
+
+	//Output:
+	//最近_t ，_w 勇士_n 老将_n 伊戈达拉_np 道出了_uw 实情_n ！_w
+}
+
 func ExampleSegToSliceTest2() {
 
 	lac := NewThulacgo("models", "", false, false, false, byte('_'))
